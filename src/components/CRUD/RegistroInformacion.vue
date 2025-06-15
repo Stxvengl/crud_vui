@@ -1,5 +1,18 @@
 <template>
   <h2>Clientes</h2>
+  <v-row class="mb-4" justify="start">
+    <v-col cols="12" md="4">
+      <v-text-field v-model="filtros.cedula" label="Buscar por Cédula" clearable
+        @keyup.enter="buscarClientes(filtros.value)" />
+    </v-col>
+    <v-col cols="12" md="4">
+      <v-text-field v-model="filtros.nombre" label="Buscar por Nombre" clearable
+        @keyup.enter="buscarClientes(filtros.value)" />
+    </v-col>
+    <v-col cols="12" md="2" class="d-flex align-center">
+      <v-btn color="primary" @click="buscarClientes(filtros.value)">Buscar</v-btn>
+    </v-col>
+  </v-row>
 
   <v-table density="compact">
     <thead>
@@ -51,15 +64,23 @@ import { mdiAccount, mdiPencil, mdiDelete } from '@mdi/js'
 import ActualizaCliente from './ActualizaCliente.vue'
 import { DeleteCliente } from '../services/ClienteServices'
 const usuarios = ref([])
+const filtros = ref({
+  cedula: '',
+  nombre: ''
+})
 
-onMounted(async () => {
+/*onMounted(async () => {
   try {
-    const response = await obtenerClientes()
+    const response = await obtenerClientes(values)
     usuarios.value = response.data
   } catch (error) {
     console.error('Error cargando los clientes:', error)
   }
+})*/
+onMounted(() => {
+  buscarClientes(filtros.value)
 })
+
 const dialogVisible = ref(false)
 const usuarioSeleccionado = ref(null)
 
@@ -79,4 +100,17 @@ const eliminar = async (values) => {
     console.error('Error al actualizar cliente:', error)
   }
 }
+
+const buscarClientes = async () => {
+  try {
+    console.log('Buscando clientes con filtros:', filtros.value)
+    const response = await obtenerClientes(filtros.value)
+    console.log('Respuesta de búsqueda:', response)
+    usuarios.value = response.data
+  } catch (error) {
+    console.error('Error buscando clientes:', error)
+  }
+}
+
+
 </script>

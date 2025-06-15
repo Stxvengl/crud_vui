@@ -1,9 +1,9 @@
 // src/ClienteServices.js
 import axios from 'axios'
 
-export async function obtenerClientes() {
+export async function obtenerClientes(values) {
   try {
-    const response = await axios.post('http://localhost:8000/api/Clientes/ObtenerClientes') 
+    const response = await axios.post('http://localhost:8000/api/Clientes/ObtenerClientes' , { values }) 
     return response.data
   } catch (error) {
     console.error('Error al obtener clientes:', error)
