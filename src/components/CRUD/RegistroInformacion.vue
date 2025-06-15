@@ -78,7 +78,7 @@ const filtros = ref({
   }
 })*/
 onMounted(() => {
-  buscarClientes(filtros.value)
+  buscarClientes()
 })
 
 const dialogVisible = ref(false)
