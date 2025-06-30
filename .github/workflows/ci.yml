@@ -16,13 +16,13 @@ jobs:
       - name: Instalar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'  # Cambia a la versión de Node.js que necesites
+          node-version: '18'
 
       - name: Instalar dependencias
         run: npm install
 
-      - name: Compilar aplicación
-        run: npm run build
+      - name: Compilar aplicación con parche crypto
+        run: node --enable-source-maps ./patch-vite.js
 
       - name: Desplegar en GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
